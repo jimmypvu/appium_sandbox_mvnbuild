@@ -13,13 +13,11 @@ import jpvu.enums.DirectionToStringConverter;
 import jpvu.enums.Directions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -27,14 +25,15 @@ import java.net.URL;
 import java.time.Duration;
 
 public class BaseTest{
-    private static final String APPIUM_MAIN_PATH = "C:/Users/jimmy/AppData/Roaming/npm/node_modules/appium/build/lib/main.js";
-    private static final String APP1_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\apks\\ApiDemos-debug.apk";
+    private final String APPIUM_MAIN_PATH = "C:/Users/jimmy/AppData/Roaming/npm/node_modules/appium/build/lib/main.js";
+    private final String APP1_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\apks\\ApiDemos-debug.apk";
     public AppiumDriver driver;
     public AppiumDriverLocalService service;
     public JavascriptExecutor jse;
 
-    @BeforeClass
+    @BeforeSuite
     public void startAppiumServer() {
+        //start appium server on local machine 127.0.0.1 port 4723 by default, use appium main.js file
         service = new AppiumServiceBuilder().withIPAddress("127.0.0.1").usingPort(4723).withAppiumJS(new File(APPIUM_MAIN_PATH)).withArgument(GeneralServerFlag.SESSION_OVERRIDE).build();
 
         service.start();
@@ -43,12 +42,19 @@ public class BaseTest{
     @BeforeMethod
     public void setupDriver() throws MalformedURLException {
         UiAutomator2Options options = new UiAutomator2Options();
-        options.setDeviceName("pixel4-11ps");
+        options.setDeviceName("pixel4v11");
+        options.setAvd("pixel4v11");  //start emulator if not already running
+        options.setPlatformName("Android");
+        options.setPlatformVersion("11");
+        options.setAutomationName("UiAutomator2");
         options.setApp(APP1_PATH);
+        options.setOrientation(ScreenOrientation.PORTRAIT);
+        options.enablePerformanceLogging();
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        jse = (JavascriptExecutor) driver;
+
+        jse = driver;
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -58,14 +64,14 @@ public class BaseTest{
         driver.quit();
     }
 
-    @AfterClass
+    @AfterSuite(alwaysRun = true)
     public void stopServer(){
         service.stop();
     }
 
-    /*****************************
-     * REUSABLE GESTURES & METHODS
-     ****************************/
+    /********************************
+     * REUSABLE ACTIONS & METHODS
+     *******************************/
 
     public void longPress(WebElement element, int durationMilliseconds){
         jse.executeScript("mobile: longClickGesture", ImmutableMap.of(

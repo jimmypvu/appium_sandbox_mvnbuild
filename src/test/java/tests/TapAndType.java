@@ -11,13 +11,10 @@ public class TapAndType extends BaseTest {
     @Test
     public void tapElementsAndInputText(){
         //mobile locators supported: xpath, id, classname, androidUIautomator (AppiumBy), accessibilityId (AppiumBy)
-        //find elements with appium inspector, need to pass app path, deviceName, platformName, automationName (driver), server ip and port
+        //explore on appium inspector, need to pass app path, deviceName, platformName, automationName (driver), server ip and port
 
-//        driver.findElement(By.);
-// By just like selenium, can use for xpath, id, classname locators
-// xpath generic syntax: //tagName[@attribute='value'] or //tagName
         scrollToEleByText("Preference");
-        driver.findElement(AppiumBy.accessibilityId("Preference")).click(); // AppiumBy only for mobile locators accessibilityId / androidUiAutomator
+        driver.findElement(AppiumBy.accessibilityId("Preference")).click();
 
         driver.findElement(By.xpath("//android.widget.TextView[@content-desc='3. Preference dependencies']")).click();
 

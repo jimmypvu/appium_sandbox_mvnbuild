@@ -9,18 +9,20 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <appiumVersion>8.3.0</appiumVersion>
         <testNgVersion>7.7.1</testNgVersion>
-        <seleniumVersion>4.9.0</seleniumVersion>
+        <seleniumVersion>4.7.2</seleniumVersion>
         <slf4jVersion>2.0.7</slf4jVersion>
         <mvnCompilerVersion>3.11.0</mvnCompilerVersion>
         <mvnSurefireVersion>3.0.0</mvnSurefireVersion> <!--3.0.0-M5-->
 
-        <jvmOptions>--add-opens java.base/java.lang=ALL-UNNAMED</jvmOptions>
+        <!--page factory workaround add this flag to vm to fix initilization for jdk 15 and up
+        if using gradle need to downgrade jdk -->
+<!--        <jvmOptions>&#45;&#45;add-opens java.base/java.lang=ALL-UNNAMED</jvmOptions>-->
     </properties>
 
     <dependencies>
@@ -38,9 +40,24 @@
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
+            <artifactId>selenium-support</artifactId>
             <version>${seleniumVersion}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-java</artifactId>-->
+<!--            <version>${seleniumVersion}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-remote-driver</artifactId>-->
+<!--            <version>${seleniumVersion}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-api</artifactId>-->
+<!--            <version>${seleniumVersion}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -48,7 +65,6 @@
             <version>${slf4jVersion}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -57,7 +73,7 @@
 
     </dependencies>
 
-    <!--maven workaround for page factory initialization, not working with gradle build-->
+    <!--maven workaround for page factory initialization if using with java 15 or later, not working with gradle build if 15+ -->
     <build>
         <plugins>
             <plugin>
@@ -75,7 +91,7 @@
                             src/test/resources/TestNG.xml
                         </suiteXmlFile>
                     </suiteXmlFiles>
-                    <argLine>${jvmOptions}</argLine>
+<!--                    <argLine>${jvmOptions}</argLine>-->
                 </configuration>
             </plugin>
         </plugins>

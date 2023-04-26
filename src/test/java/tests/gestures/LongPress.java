@@ -1,4 +1,4 @@
-package tests;
+package tests.gestures;
 
 import io.appium.java_client.AppiumBy;
 import jpvu.BaseTest;

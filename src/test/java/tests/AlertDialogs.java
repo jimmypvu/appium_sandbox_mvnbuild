@@ -1,6 +1,7 @@
 package tests;
 
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import jpvu.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,24 @@ import java.util.List;
 import java.util.Random;
 
 public class AlertDialogs extends BaseTest {
+    //can use page factory pattern on maven build, support for selenium pagefactory wasn't working with appium 8.3 + java 15 or later on gradle without workaround
+    @AndroidFindBy(accessibility = "App")
+    public WebElement appsBtn;
+    @AndroidFindBy(accessibility = "Alert Dialogs")
+    public WebElement alertsBtn;
+    @AndroidFindBy(accessibility = "List dialog")
+    public WebElement listDialogBtn;
+    @AndroidFindBy(accessibility = "Single choice list")
+    public WebElement singleChoiceListBtn;
+    @AndroidFindBy(accessibility = "Text Entry dialog")
+    public WebElement textEntryDialogBtn;
+    @AndroidFindBy(accessibility = "Repeat alarm")
+    public WebElement repeatAlarmBtn;
+    @AndroidFindBy(accessibility = "Ok Cancel dialog with Holo Light theme")
+    public WebElement okCancelDialogBtn;
+    @AndroidFindBy(accessibility = "Progress dialog")
+    public WebElement progressDialogBtn;
+
     public By appsBtnLoc = AppiumBy.accessibilityId("App");
     public By alertsBtnLoc = AppiumBy.accessibilityId("Alert Dialogs");
     public By listDialogBtnLoc = AppiumBy.accessibilityId("List dialog");

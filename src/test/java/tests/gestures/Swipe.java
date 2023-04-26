@@ -1,4 +1,4 @@
-package tests;
+package tests.gestures;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -21,8 +21,6 @@ public class Swipe extends BaseTest {
 
     @Test
     public void swipeByElement(){
-//        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-
         driver.findElement(viewsBtnLoc).click();
 //        viewsBtn.click();
         driver.findElement(galleryBtnLoc).click();

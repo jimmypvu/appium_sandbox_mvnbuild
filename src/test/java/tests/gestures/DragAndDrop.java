@@ -1,4 +1,4 @@
-package tests;
+package tests.gestures;
 
 import io.appium.java_client.AppiumBy;
 import jpvu.BaseTest;
@@ -14,6 +14,7 @@ public class DragAndDrop extends BaseTest {
     public By dragDot2Loc = AppiumBy.id("io.appium.android.apis:id/drag_dot_2");
     public By dragDot3Loc = AppiumBy.id("io.appium.android.apis:id/drag_dot_3");
     public By dragResultTxtLoc = AppiumBy.id("io.appium.android.apis:id/drag_result_text");
+
     @Test
     public void dragAndDrop(){
         driver.findElement(viewsBtnLocator).click();
@@ -36,6 +37,5 @@ public class DragAndDrop extends BaseTest {
 
         Assert.assertTrue(driver.findElement(dragResultTxtLoc).isDisplayed());
         Assert.assertEquals(driver.findElement(dragResultTxtLoc).getAttribute("text"), "No drop");
-        pause();
     }
 }

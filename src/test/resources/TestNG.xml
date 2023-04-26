@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="TestNG Suite" verbose="2" parallel="false">
+<suite name="TestNG Suite" verbose="2" parallel="none">
     <test name="Appium Tests">
-        <classes>
-            <class name="tests.POMTest" />
-        </classes>
+        <packages>
+            <package name="tests" />
+            <package name="tests.gestures" />
+        </packages>
     </test>
 </suite>

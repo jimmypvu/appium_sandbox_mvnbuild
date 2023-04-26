@@ -1,4 +1,4 @@
-package tests;
+package tests.gestures;
 
 import jpvu.BaseTest;
 
